@@ -144,7 +144,6 @@ nav.tm_navbar .sub-menu > ul {
 	display: none;
 	width: 138px;
 	left: 0;
-	top: 62px;
 	list-style: none !important;
 	zoom: 1;
 	z-index: 11;
@@ -152,6 +151,7 @@ nav.tm_navbar .sub-menu > ul {
 	padding: 13px 0 13px 0;
 	margin: 0;
 }
+.sub-menu{ margin-top:25px; }
 nav.tm_navbar .sub-menu > ul li {
 	background: none;
 	border: none;
@@ -2427,3 +2427,6 @@ footer ul li a:hover {
 	padding-bottom: 45px;
 }
 /*Core variables and mixins*/
+nav.tm_navbar .sub-menu:hover > ul{
+	display: block;
+}

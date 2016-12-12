@@ -16,4 +16,11 @@ return [
     'required_fields' => 'Required fields',
     'cancel' => 'Cancel',
     'book_request' => 'Book Request',
+    'send_success ' => 'Send success',
+    'send_fail ' => 'Send fail',
+    'approved' => 'Approved',
+    'not_approved' => 'Not approved',
+    'no_request' => 'You do not have request to be sent.',
+    'cancel_success' => 'Cancel success',
+    'cancel_fail' => 'Cancel fail',
 ];

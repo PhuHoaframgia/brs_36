@@ -27,8 +27,10 @@ Route::post('/custom-register',[
     'as' => 'register',
     'uses' => 'User\RegisterController@register',
 ]);
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
-    Route::resource('category', 'Admin\CategoryController');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::resource('category', 'CategoryController');
+    Route::resource('user', 'UserController');
+    Route::resource('author', 'AuthorController');
 });
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/login', 'Auth\LoginController@login');
