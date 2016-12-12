@@ -6,6 +6,8 @@ use App\Repositories\BaseRepository;
 
 class CategoryRepository extends BaseRepository
 {
+    protected $model;
+
     public function __construct(Category $category)
     {
         $this->model = $category;
@@ -13,8 +15,14 @@ class CategoryRepository extends BaseRepository
 
     public function getListCategory()
     {
-        $listCategory = $this->model->lists('name');
+        $categories = $this->model->lists('name');
 
-        return $listCategory;
+        return $categories;
+    }
+    public function getCategory()
+    {
+        $categories = $this->model->all();
+
+        return $categories;
     }
 }
