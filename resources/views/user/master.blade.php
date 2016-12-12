@@ -13,6 +13,8 @@
         {{ Html::style('user/css/mystyle.css') }}
         {{ Html::style('user/css/style.css') }}
         {{ Html::style('user/css/tm_docs.css') }}
+        {{ Html::script('http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js') }}
+        {{ Html::script('/user/js/myscript.js') }}
     </head>
 <!--header-->
 

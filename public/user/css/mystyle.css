@@ -279,6 +279,10 @@
     height: auto;margin-bottom: 10px;
 }
 
+.detailbook a{ cursor: pointer; }
+
+.detailbook a:hover{ text-decoration: underline; }
+
 .khung1 { width: 870px;height: 430px; }
 
 .khung1 tr{ font-size: 15px;border-bottom: 1px dashed #12b980 }
@@ -301,7 +305,7 @@
 
 .inforbook>h2{ font-size: 25px;margin: 10px 0px 10px 200px; }
 
-.inforbook a{
+.inforbook>button{
     padding: 4px 9px 1px 10px;
     background-color: #12b980;
     color:white;font-weight: bold;
@@ -309,6 +313,11 @@
     float: left;padding-left: 30px;
     border-radius: 3px;
     margin-left: 60px;
+    border: 0;
+}
+.inforbook>button:hover{
+   background-color: #ff3366;
+   text-decoration: underline;
 }
 .inforbook >img{
     width: 28px;height: 28px;
@@ -411,11 +420,11 @@
 
 .p_date{
     font-size: 11px;color: gray;
-    float: left;margin-top: -4px;
+    float: left;margin-top: -3px;
     margin-bottom: 0px;
 }
 
-.show_cmt{ ;margin: 0px 0px -6px 65px;width: 600px; }
+.show_cmt{ ;margin: 0px 0px -6px 65px;width: 600px;display: none; }
 
 .img_cmt{
     width: 30px;height: 30px;
@@ -429,7 +438,7 @@
 .p_date_cmt{
     font-size: 10px;color: gray;
     float: left;margin-top: -4px;
-    margin-bottom: -6px;
+    margin-bottom: -8px;
 }
 
 .input_cmt{
