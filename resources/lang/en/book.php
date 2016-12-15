@@ -21,8 +21,5 @@ return [
     'first' => 'First',
     'last' => 'Last',
     'unlike' => 'Unlike',
-    'dont_have' => 'dont have any category',
-    'dont_have_this_book' => 'dont have this book',
-    'dont_have_this_category' => 'dont have book with this category',
 ];
 

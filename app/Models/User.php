@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->role == config('user.role.admin');
     }
 
+    public function getAvatarPath()
+    {
+        return asset(config('settings.avatar_path') . $this->image);
+    }
+
     public function requests()
     {
         return $this->hasMany(Request::class);

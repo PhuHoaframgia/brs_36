@@ -13,7 +13,7 @@ class RequestController extends BaseController
 {
     protected $requestRepository;
 
-    public function __construct(RequestRepository $requestRepository,CategoryRepository $CategoryRepository)
+    public function __construct(RequestRepository $requestRepository, CategoryRepository $CategoryRepository)
     {
         $this->requestRepository = $requestRepository;
         parent::__construct($CategoryRepository);

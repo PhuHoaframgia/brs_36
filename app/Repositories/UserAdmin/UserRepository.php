@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\UserRepository;
+namespace App\Repositories\UserAdmin;
 
 use App\Models\User;
 use Input;
