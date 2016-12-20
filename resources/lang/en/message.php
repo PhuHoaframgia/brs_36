@@ -17,5 +17,4 @@ return [
     'review' => 'reviews',
     'comment' => 'comments',
     'rate' => 'rates',
-    'edit' => 'Edit',
 ];

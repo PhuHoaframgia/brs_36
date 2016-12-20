@@ -27,4 +27,14 @@ class BookRepository extends BaseRepository implements BookInterface
 
         return $book;
     }
+    
+    public function check($userId, $bookId, $table)
+    {
+        if ($this->$table->check($userId, $bookId)) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

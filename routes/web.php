@@ -29,7 +29,24 @@ Route::group(['prefix' => '/home', 'middleware:user'], function () {
         'as' => 'unFollow',
         'uses' => 'User\TimelineController@postUnFollow',
     ]);
+    Route::resource('list', 'User\BookController', [
+    'only' => ['show']
+    ]);
+    Route::get('detail/{id}', 'User\BookController@getDetail');
+    Route::resource('request', 'User\RequestController', [
+        'only' => ['index', 'store', 'destroy']
+    ]);
+    Route::post('markLike', ['as' => 'markLike', 'uses'=> 'User\LikeController@markLike']);
+    Route::post('markbook', ['as' => 'markBook', 'uses'=> 'User\MarkController@markBook']);
+    Route::post('rateBook', ['as' => 'rateBook', 'uses'=> 'User\RateController@rateBook']);
+    Route::resource('review', 'User\ReviewController', [
+        'only' => ['store']
+    ]);
+    Route::resource('comment', 'User\CommentController', [
+        'only' => ['store']
+    ]);
 });
+
 Route::get('/custom-register',[
     'as' => 'register',
     'uses' => 'User\RegisterController@index',
@@ -49,18 +66,3 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/login', 'Auth\LoginController@login');
 
-Route::resource('list', 'User\BookController', [
-    'only' => ['show']
-]);
-Route::get('detail/{id}', 'User\BookController@getDetail');
-Route::resource('request', 'User\RequestController', [
-    'only' => ['index', 'store', 'destroy']
-]);
-Route::post('maskLike', ['as' => 'maskLike', 'uses'=> 'User\LikeController@maskLike']);
-Route::post('markbook', ['as' => 'maskBook', 'uses'=> 'User\MarkController@markBook']);
-Route::resource('review', 'User\ReviewController', [
-    'only' => ['store']
-]);
-Route::resource('comment', 'User\CommentController', [
-    'only' => ['store']
-]);
