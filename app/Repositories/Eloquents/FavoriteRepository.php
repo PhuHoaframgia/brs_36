@@ -36,6 +36,6 @@ class FavoriteRepository extends BaseRepository implements FavoriteInterface
 
     public function getContent($id)
     {
-        return $this->find($id)->user;
+        return $this->find($id)->book;
     }
 }

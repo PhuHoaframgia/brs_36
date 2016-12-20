@@ -13,6 +13,8 @@ use App\Repositories\Interfaces\BookInterface;
 use App\Repositories\Interfaces\CommentInterface;
 use App\Repositories\Interfaces\ReviewInterface;
 use App\Repositories\Interfaces\RateInterface;
+use App\Repositories\Interfaces\LikeInterface;
+use App\Repositories\Interfaces\MarkInterface;
 
 class TimelineRepository extends  BaseRepository implements TimelineInterface
 {
@@ -22,8 +24,10 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
     protected $activities;
     protected $reviews;
     protected $comments;
-    protected $rate;
+    protected $rates;
     protected $model;
+    protected $likes;
+    protected $marks;
 
     public function __construct(
         UserInterface $user,
@@ -32,7 +36,9 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
         CommentInterface $comment,
         ReviewInterface $review,
         RateInterface $rate,
-        Activity $activity
+        Activity $activity,
+        LikeInterface $likeInterface,
+        MarkInterface $markInterface
         ) {
         $this->users = $user;
         $this->favorites = $favorite;
@@ -42,6 +48,8 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
         $this->comments = $comment;
         $this->rates = $rate;
         $this->model = $activity;
+        $this->likes = $likeInterface;
+        $this->marks = $markInterface;
     }
 
     public function getTimeline($id, $currentUser)

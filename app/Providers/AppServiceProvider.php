@@ -18,6 +18,14 @@ use App\Repositories\Eloquents\ReviewRepository;
 use App\Repositories\Interfaces\RateInterface;
 use App\Repositories\Interfaces\ReviewInterface;
 use App\Repositories\Interfaces\CommentInterface;
+use App\Repositories\Interfaces\LikeInterface;
+use App\Repositories\Eloquent\LikeRepository;
+use App\Repositories\Interfaces\MarkInterface;
+use App\Repositories\Eloquent\MarkRepository;
+use App\Repositories\Eloquent\BookRepository;
+use App\Repositories\Interfaces\BookInterface;
+use App\Repositories\Interfaces\RequestInterface;
+use App\Repositories\Eloquent\RequestRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,5 +53,9 @@ class AppServiceProvider extends ServiceProvider
         App::bind(RateInterface::class, RateRepository::class);
         App::bind(ReviewInterface::class, ReviewRepository::class);
         App::bind(CommentInterface::class, CommentRepository::class);
+        App::bind(LikeInterface::class, LikeRepository::class);
+        App::bind(MarkInterface::class, MarkRepository::class);
+        App::bind(BookInterface::class, BookRepository::class);
+        App::bind(RequestInterface::class, RequestRepository::class);
     }
 }

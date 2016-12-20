@@ -347,7 +347,7 @@
 
 .scrol table tr th:nth-child(1){ width:10px; }
 
-.scrol table tr th:nth-child(2){ width:400px; }
+.scrol table tr th:nth-child(2){ width:270px; }
 
 .scrol table tr th:nth-child(3){ width:auto; }
 
@@ -648,3 +648,16 @@
 .starrate{ width: 15px;height: 15px;margin-top: -4px; }
 
 .collg{ width: 290px;padding-left: 0px; }
+
+#bt{ 
+    border: 0px; 
+    background-color:#12b980; 
+    color: white;margin-left: 40px;
+    font-weight: bold;
+    padding:4px 10px; 
+}
+#bt:hover{ background-color: #ff3366;text-decoration: underline; }
+
+.but.btn-default.btn1{ top: 6px; }
+
+.glyphicon{ color:  #12b980; }
