@@ -56,11 +56,11 @@
                                 <td>{{ $keys+1 }}</td>
                                 <td>{{ $request->content }}</td>
                                 <td>
-                                   {{ ($request->status) ? trans('book_request.approved') : trans('book_request.not_approved') }}
+                                   {{ ($request->status) ? trans('book_request.not_approved') : trans('book_request.approved') }}
                                 </td>
                                 <td>
                                     {!! Form::open(['action' => ['User\RequestController@destroy', $request->id] ,'method' => 'delete']) !!}
-                                        {!! Form::submit('Submit', ['class' => 'btn-default btn1',  'onclick' => 'return confirm("' . trans('category.category_comfirm_delete') . '")']) !!}
+                                        {!! Form::submit('Submit', ['class' => 'but btn-default btn1',  'onclick' => 'return confirm("' . trans('category.category_comfirm_delete') . '")']) !!}
                                     {!! Form::close() !!}
                                 </td>
                             </tr>

@@ -8,7 +8,7 @@ $(document).ready(function() {
     $("#bt").click(function() {
         var temp = $(this).val();
         var _token = $(".gettoken").attr('idtoken');
-        var url = $('.hide').data('route') + '/maskLike';
+        var url = $('.hide').data('route') + '/markLike';
         var idBook = $(this).attr('idbv');
         $.ajax({
             url: url,
@@ -30,14 +30,14 @@ $(document).ready(function() {
     $("input:radio[name=mask]").click(function() {
         var value = $(this).val();
         var _token = $(".gettoken").attr('idtoken');
-        var url = $('.hide').data('route') + '/maskbook';
+        var url = $('.hide').data('route') + '/markbook';
         var idbook = $(this).attr('idbv');
         $.ajax({
             url: url,
             type: "POST",
-            data: {"type":'marks',"idbook":idbook,"_token":_token,"value" : value},
+            data: {"type": 'marks', "idbook": idbook,"_token": _token, "value" : value},
             success: function(kq) {
-                alert(kq);
+               
             }
         });
     });
@@ -61,7 +61,6 @@ $(document).ready(function() {
                         if (response.success) {
                             $("#reviewhere").before(response.data);
                             $('input:text[name=txtreview]').val("");
-                            
                         } else {
                             alert("error");
                         }    

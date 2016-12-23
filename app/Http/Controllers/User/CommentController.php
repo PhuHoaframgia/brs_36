@@ -5,41 +5,46 @@ namespace App\Http\Controllers\user;
 use Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Eloquents\TimelineRepository;
-use App\Repositories\Eloquents\CommentRepository;
+use App\Repositories\Interfaces\TimelineInterface;
+use App\Repositories\Interfaces\CommentInterface;
 
 class CommentController extends Controller
 {
-    protected $commentRepository;
+    protected $commentInterface;
 
-    public function __construct(CommentRepository $commentRepository, TimelineRepository $timelineRepository)
+    public function __construct(CommentInterface $commentInterface, TimelineInterface $timelineInterface)
     {
-        $this->commentRepository = $commentRepository;
-        $this->timelineRepository = $timelineRepository;
+        $this->commentInterface = $commentInterface;
+        $this->timelineInterface = $timelineInterface;
     }
 
     public function store()
     {
         if (Request::ajax()) {
             $data = Request::get('data');
-            $reviewId = (int) Request::get('reviewId');
-            $inputs = [
+            $reviewId = (int) Request::get('id_review');
+            $getComment = [
                 'content' => $data,
                 'review_id' => $reviewId,
                 'user_id' => Auth::user()->id,
             ];
-            $comments = [
-                'target_type' => 'comments',
-                'target_id' => $reviewId,
-                'user_id' => Auth::user()->id,
-            ];
-
-            if ($this->timelineRepository->insertAction($comments) && $comment = $this->commentRepository->create($inputs)) {
-
-                return [
-                    'success' => true,
-                    'data' => view('user.temps.temp_comment', compact('data', 'comment'))->render(), 
+            
+            if ($comment = $this->commentInterface->create($getComment)) {
+                $timeline = [
+                    'target_type' => 'comments',
+                    'target_id' => $comment->id,
+                    'user_id' => Auth::user()->id,
                 ];
+
+                if ($this->timelineInterface->insertAction($timeline)) { 
+                   
+                    return [
+                        'success' => true,
+                        'data' => view('user.temps.temp_comment', compact('data', 'comment'))->render(), 
+                    ];
+                }
+
+                return [ 'success' => false ];
             } else {
 
                 return [ 'success' => false ];

@@ -3,53 +3,67 @@
 <div class="detail freework" >
     <div class="detailbook">
         <div class="khung1" >
-            {{ Html::image('user/img/$book->image') }}
+            {{ Html::image("user/img/".$data['book']->image) }}
             <div class="inforbook" >
-                <h2>{{ $book->tittle }}</h2>
+                <h2>{{ $data['book']->tittle }}</h2>
                 <input type="hidden" idtoken="{{ csrf_token() }}" class="gettoken" />
-                <input type="button" id ="bt" idbv="{{ $book->id }}" value="Like"  >
-                {{ Html::image('user/img/like1.png') }}
+                <div class="hide" data-route="{!! url('/home') !!}"></div>
+                @if ($data['haveLike']== false)
+                    <input type="button" id ="bt" idbv="{{ $data['book']->id }}" value="Mark favorite"  >
+                @else 
+                    <input type="button" id ="bt" idbv="{{ $data['book']->id }}" value="Remove favorite mark"  >
+                @endif
                 <table>
                     <tr>
                         <td>{{ trans('book.author') }}:</td>
-                        <td>{{ $book->author->name }}</td>
+                        <td>{{ $data['book']->author->name }}</td>
                     </tr>
                     <tr>
                         <td>{{ trans('book.category') }}:</td>
-                        <td>{{ $book->category->name }}</td>
+                        <td>{{ $data['book']->category->name }}</td>
                     </tr>
                     <tr>
                         <td>{{ trans('book.public_day') }}:</td>
-                        <td>{{ $book->public_date }}</td>
+                        <td>{{ $data['book']->public_date }}</td>
                     </tr>
                     <tr>
                         <td>{{ trans('book.number_of_likes') }}: </td>
-                        <td>45</td>
+                        <td>{{ $data['book']->num_pages }}</td>
                     </tr>
                     <tr>
                         <td>{{ trans('book.rate') }}: </td>
                         <td>
                             <div id="div_rate">
                                 @foreach (range(1, 5) as $key )
-                                 <span class="glyphicon glyphicon-star{{ ($key <=  $book->rate_avg) ? '' : '-empty'}}" id="rate" rate-id="{{ $key }}"></span>
+                                 <span class="glyphicon glyphicon-star{{ ($key <=  $data['book']->rate_avg) ? '' : '-empty'}}" id="rate" rate-id="{{ $key }}"></span>
                                 @endforeach
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="radio" name="mask" value="1" idbv="{{ $book->id }}" >{{ trans('book.mark_book_as_reading') }} </td>
-                        <td><input type="radio" name="mask" value="2" idbv="{{ $book->id }}" >{{ trans('book.mark_book_as_readed') }}</td>
+                        @if($data['markbook'] == false)
+                            <td><input type="radio" name="mask" value="1" idbv="{{ $data['book']->id }}" >{{ trans('book.mark_book_as_reading') }} </td>
+                            <td><input type="radio" name="mask" value="2" idbv="{{ $data['book']->id }}" >{{ trans('book.mark_book_as_readed') }}</td>
+                        @else
+                            @if ($data['markbook'] == 1)
+                                <td><input type="radio" name="mask" checked="checked" value="1" idbv="{{ $data['book']->id }}" >{{ trans('book.mark_book_as_reading') }} </td>
+                                <td><input type="radio" name="mask" value="2" idbv="{{ $data['book']->id }}" >{{ trans('book.mark_book_as_readed') }}</td>
+                            @else 
+                                <td><input type="radio" name="mask"  value="1" idbv="{{ $data['book']->id }}" >{{ trans('book.mark_book_as_reading') }} </td>
+                                <td><input type="radio" checked="checked" name="mask" value="2" idbv="{{ $data['book']->id }}" >{{ trans('book.mark_book_as_readed') }}</td>
+                            @endif
+                        @endif
                     </tr>
                 </table>
             </div>
         </div>
         <h2> {{ trans('book.content') }}</h2>
         <div class="khung2">
-            {{ $book->content }}
+            {{ $data['book']->content }}
         </div>
         <h2 class="wri_review">{{ trans('book.write_review') }}</h2>
         <fieldset class="fs_review">
-            @foreach ($book->reviews as $review)
+            @foreach ($data['book']->reviews as $review)
                 <div>
                     {{ Html::image('user/img/$review->user->image', 'a picture', ['class' => 'imgreview']) }}
                     <div>
@@ -83,7 +97,7 @@
             @endforeach
             <div id="reviewhere">
                 {{ Html::image('user/img/Auth::user()->image', 'a picture', ['class' => 'imgreview']) }}
-                <input type="text" name="txtreview" class="input_review" idbv="{{ $book->id }}"placeholder="{{ trans('book.write_request_here') }}..." value="">
+                <input type="text" name="txtreview" class="input_review" idbv="{{ $data['book']->id }}"placeholder="{{ trans('book.write_request_here') }}..." value="">
             </div>
         </fieldset>
     </div>

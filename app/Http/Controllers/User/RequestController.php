@@ -5,29 +5,29 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Eloquent\RequestRepository;
+use App\Repositories\Interfaces\RequestInterface;
 use App\Http\Requests\RequestRequest;
 
 class RequestController extends BaseController
 {
-    protected $requestRepository;
+    protected $requestInterface;
 
-    public function __construct(RequestRepository $requestRepository)
+    public function __construct(RequestInterface $requestInterface)
     {
-        $this->requestRepository = $requestRepository;
+        $this->requestInterface = $requestInterface;
         parent::__construct();
     }
 
     public function index()
     {
-        $requests = $this->requestRepository->getAllOfRequest(Auth::user()->id);
+        $requests = $this->requestInterface->getAllOfRequest(Auth::user()->id);
 
         return view('user.pages.request', compact('requests'));
     }
 
     public function destroy($requestId)
     {
-        if ($this->requestRepository->delete($requestId)) {
+        if ($this->requestInterface->delete($requestId)) {
             return redirect()->action('User\RequestController@index')->with('success', trans('book_request.cancel_success'));
         }
 
@@ -42,7 +42,7 @@ class RequestController extends BaseController
             'user_id' => Auth::user()->id,
         ];
 
-        if ($this->requestRepository->create($inputs)) {
+        if ($this->requestInterface->create($inputs)) {
             return redirect()->action('User\RequestController@index')->with('success', trans('book_request.send_success'));
         }
 

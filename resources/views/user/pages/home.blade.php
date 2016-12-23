@@ -89,6 +89,7 @@
             <div class="tline">
                 <p> {{ $action['title'] }} </p>
                 <div>
+                    {{ Html::image('user/img/page3_pic6.jpg') }}
                     <div class="img1" >
                         <p>3</p>
                         {{ Html::image('user/img/rate.png') }}
