@@ -8,6 +8,7 @@ use App\Http\Controllers\BaseController;
 use App\Repositories\Interfaces\BookInterface;
 use App\Repositories\Interfaces\MarkInterface;
 use App\Repositories\Interfaces\LikeInterface;
+use App\Repositories\Interfaces\RateInterface;
 use Illuminate\Support\Facades\Auth;
 
 class BookController extends BaseController
@@ -15,13 +16,15 @@ class BookController extends BaseController
     protected $bookInterface;
     protected $likeInterface;
     protected $markInterface;
+    protected $rateInterface;
 
-    public function __construct(BookInterface $bookInterface, LikeInterface $likeInterface, MarkInterface $markInterface)
+    public function __construct(BookInterface $bookInterface, LikeInterface $likeInterface, MarkInterface $markInterface, RateInterface $rateInterface)
     {
         $this->bookInterface = $bookInterface;
         parent::__construct();
         $this->likeInterface = $likeInterface;
         $this->markInterface = $markInterface;
+        $this->rateInterface = $rateInterface;
     }
 
     public function show($categoryId)
@@ -37,7 +40,8 @@ class BookController extends BaseController
         $data = [
             'book' => $book,
             'haveLike' => $this->likeInterface->check(Auth::user()->id, $bookId),
-            'markbook' => $this->markInterface->check($bookId ,Auth::user()->id),
+            'markbook' => $this->markInterface->check($bookId, Auth::user()->id),
+            'rateBook' => $this->rateInterface->check($bookId, Auth::user()->id),
         ];
 
         if (!$book) {

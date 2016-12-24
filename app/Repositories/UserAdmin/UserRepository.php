@@ -7,19 +7,12 @@ use Input;
 use Hash;
 use App\Repositories\BaseRepository;
 use App\Repositories\Interfaces\UserInterface;
-use App\Repositories\Review\ReviewRepository;
-use App\Repositories\Eloquent\RequestRepository;
 
 class UserRepository extends BaseRepository implements UserInterface
 {
-    public function __construct(
-        User $user,
-        ReviewRepository $reviewRepository,
-        RequestRepository $requestRepository
-    ) {
+    public function __construct(User $user)
+    {
         $this->model = $user;
-        $this->reviewRepository = $reviewRepository;
-        $this->requestRepository = $requestRepository;
     }
 
     public function createUser($datas)
@@ -88,7 +81,7 @@ class UserRepository extends BaseRepository implements UserInterface
     public function uploadAvatar($oldImage)
     {
         $file = Input::file('image');
-        $destinationPath = base_path() . '/public' . config('settings.avatar_path');
+        $destinationPath = base_path() . config('settings.avatar_path');
         $fileName = uniqid(rand(), true) . '.' . $file->getClientOriginalExtension();
         Input::file('image')->move($destinationPath, $fileName);
         if (!empty($oldImage) && file_exists($oldImage)) {
@@ -101,24 +94,5 @@ class UserRepository extends BaseRepository implements UserInterface
     public function getProfile($id)
     {
         return $this->find($id);
-    }
-
-    public function delete ($id)
-    {
-        $user = $this->model->find($id);
-        if ($user) {
-            foreach ($user->reviews as $review) {
-                $this->reviewRepository->delete($review->id);
-            }
-
-            foreach ($user->requests as $request) {
-                $this->requestRepository->delete($request->id);
-            }
-            $user->delete();
-
-            return true;
-        }
-
-        return false;
     }
 }

@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\User;
 
 use Request;
-use App\Repositories\Eloquent\LikeRepository;
-use App\Repositories\Eloquents\TimelineRepository;
+use App\Repositories\Interfaces\TimelineInterface;
+use App\Repositories\Interfaces\LikeInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
-    protected $likeRepository;
-    protected $timelineRepository;
+    protected $likeInterface;
+    protected $timelineInterface;
 
-    public function __construct(LikeRepository $likeRepository, TimelineRepository $timelineRepository) 
+    public function __construct(LikeInterface $likeInterface, TimelineInterface $timelineInterface) 
     {
-        $this->likeRepository = $likeRepository;
-        $this->timelineRepository = $timelineRepository;
+        $this->likeInterface = $likeInterface;
+        $this->timelineInterface = $timelineInterface;
     }
 
-    public function maskLike()
+    public function markLike()
     {
         if (Request::ajax()) {
             $type = Request::get('type');
@@ -32,13 +32,13 @@ class LikeController extends Controller
                     'target_id' => $idBook,
                     'user_id' => Auth::user()->id,
                 ];
-                $this->timelineRepository->insertAction($inputs);   
-                $this->likeRepository->create($inputs);
+                $this->timelineInterface->insertAction($inputs);   
+                $this->likeInterface->create($inputs);
 
                 return 1;
             } else {
-                $this->likeRepository->delLike($type, $idBook, Auth::user()->id);
-                $this->timelineRepository->deleteAction(Auth::user()->id, $type, $idBook);
+                $this->likeInterface->delLike($type, $idBook, Auth::user()->id);
+                $this->timelineInterface->deleteAction(Auth::user()->id, $type, $idBook);
 
                 return 2;
             }

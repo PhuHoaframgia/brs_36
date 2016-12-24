@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\User;
 
 use Request;
-use App\Repositories\Eloquent\MarkRepository;
+use App\Repositories\Interfaces\MarkInterface;
+use App\Repositories\Interfaces\TimelineInterface;
 use App\Models\Mark;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 class MarkController extends Controller
 {
-    protected $markRepository;
+    protected $markInterface;
+    protected $timelineInterface;
 
-    public function __construct(MarkRepository $markRepository)
+    public function __construct(MarkInterface $markInterface, TimelineInterface $timelineInterface)
     {
-        $this->markRepository = $markRepository;
+        $this->markInterface = $markInterface;
+        $this->timelineInterface = $timelineInterface;
     }
 
     public function markBook()
@@ -23,7 +26,7 @@ class MarkController extends Controller
             $type = Request::get('type');
             $bookId = (int) Request::get('idbook');
             $value = Request::get('value');
-            $mark = $this->markRepository->findMark($bookId, Auth::user()->id);
+            $mark = $this->markInterface->findMark($bookId, Auth::user()->id);
 
             if (!$mark) {
                 $marks = [
@@ -32,15 +35,24 @@ class MarkController extends Controller
                     'user_id' => Auth::user()->id,
                 ];
 
-                if ($this->markRepository->create($marks)) {
-                    return 1;
+                if ($newMark = $this->markInterface->create($marks)) {
+                    $timeline = [
+                        'target_type' => 'marks',
+                        'target_id' => $newMark->id,
+                        'user_id' => Auth::user()->id,
+                    ];
+
+                    if ($this->timelineInterface->insertAction($timeline)) {
+
+                        return 1;
+                    }
                 }
             }
 
             $updateMark = [
                 'status' => $value,
             ];
-            $this->markRepository->update($updateMark, $mark->id);
+            $this->markInterface->update($updateMark, $mark->id);
 
             return 2;
         }

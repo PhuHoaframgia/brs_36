@@ -4,17 +4,13 @@ namespace App\Repositories\Book;
 
 use App\Models\Book;
 use App\Repositories\BaseRepository;
-use App\Repositories\Review\ReviewRepository;
 use Input;
 
 class BookRepository extends BaseRepository
 {
-    public function __construct(
-        Book $book,
-        ReviewRepository $reviewRepository
-    ) {
+    public function __construct(Book $book)
+    {
         $this->model = $book;
-        $this->reviewRepository = $reviewRepository;
     }
 
     public function create($request)
@@ -71,20 +67,5 @@ class BookRepository extends BaseRepository
         }
 
         return $fileName;
-    }
-
-    public function delete($id)
-    {
-        $book = $this->model->find($id);
-        if ($book) {
-            foreach ($book->reviews as $review) {
-                $this->reviewRepository->delete($review->id);
-            }
-            $book->delete();
-
-            return true;
-        }
-
-        return false;
     }
 }
