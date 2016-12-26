@@ -1,10 +1,11 @@
 window.onload = (function () {
     $(".clickOnChange").click(function () {
         var token  = $("input[name = '_token']").val();
+        var url = $('.hide').data('route') + '/unfollow/';
         var followed_id = $(this).attr('id');
         $.ajax({
             type: 'POST',
-            url: '/home/unfollow/' + followed_id,
+            url: url + followed_id,
             cache: false,
             data: {'_token': token,'id': followed_id},
             success:function(data) {

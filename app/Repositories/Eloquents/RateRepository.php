@@ -47,4 +47,21 @@ class RateRepository extends BaseRepository implements RateInterface
     {
         return $this->find($id)->book;
     }
+
+    public function findRate($bookId, $userId)
+    {
+        return $this->model->where('user_id', $userId)->where('book_id', $bookId)->first();
+    }
+
+    public function check($bookId, $userId)
+    {
+        $checkRate = $this->model->where('book_id', $bookId)->where('user_id', $userId)->first();
+
+        if ($checkRate) {
+            return $checkRate->point;
+        }
+    
+        return false;
+    }
+
 }

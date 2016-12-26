@@ -303,7 +303,7 @@
     background-color: white;width: 550px;
 }
 
-.inforbook>h2{ font-size: 25px;margin: 10px 0px 10px 200px; }
+.inforbook>h2{ font-size: 25px;margin: 10px auto;text-align: center; }
 
 .inforbook>button{
     padding: 4px 9px 1px 10px;
@@ -324,13 +324,16 @@
     position: absolute;float: left;
     margin: -1px 0px 0px 61px;
 }
+.inforbook input[type=radio]{
+    margin-right: 5px;
+}
 .star{ width: 15px;height: 15px;margin-top: -4px; }
 
 .wri_review{ margin-top: 10px;margin-bottom: -10px; }
 
-.ava_cmt{ margin-top: 10px;margin-bottom: -10px; }
+.ava_cmt{ margin-top: 10px;margin-bottom: -10px;font-weight: bold; }
 
-.ava_cmt1{ margin-top: -5px; }
+.ava_cmt1{ margin-top: -5px;width: 787px; }
 
 .clear_mer{ clear: left;margin-bottom: 10px; }
 /*----------- REQUEST-INFOR--------*/
@@ -405,7 +408,7 @@
 
 .imgreview{
     width: 38px;height: 38px;float: left;
-    margin-left: 20px;margin-top: 2px;
+    margin-left: 10px;margin-top: 2px;
     border-radius: 2px;
 }
 
@@ -416,7 +419,7 @@
     margin-left: 5px;
 }
 
-.like_a_cm{ float: left;font-size: 13px;margin: 2px 5px; }
+.like_a_cm{ float: left;font-size: 13px; margin: 2px 5px; }
 
 .p_date{
     font-size: 11px;color: gray;
@@ -424,7 +427,7 @@
     margin-bottom: 0px;
 }
 
-.show_cmt{ ;margin: 0px 0px -6px 65px;width: 600px;display: none; }
+.show_cmt{ ;margin-bottom:-6px; width: 600px;display: none; }
 
 .img_cmt{
     width: 30px;height: 30px;
@@ -656,8 +659,29 @@
     font-weight: bold;
     padding:4px 10px; 
 }
+
 #bt:hover{ background-color: #ff3366;text-decoration: underline; }
 
 .but.btn-default.btn1{ top: 6px; }
 
-.glyphicon{ color:  #12b980; }
+.glyphicon{ color:  #85918E; }
+
+.green{ color: #12b980; }
+
+.div_review { margin-left: 55px; }
+
+.glyphicon.glyphicon-remove { 
+    margin-top: 4px;float: right;
+    font-size: 11px;color: #BACAC5; 
+}
+.glyphicon.glyphicon-pencil { 
+    margin-top: 3px;float: right;
+    margin-right:5px;font-size: 11.5px; 
+    color: #BACAC5; 
+}
+.glyphicon.glyphicon-pencil:hover { 
+    color: #12b980;
+}
+.glyphicon.glyphicon-remove:hover {
+    color: #f43b60;
+}

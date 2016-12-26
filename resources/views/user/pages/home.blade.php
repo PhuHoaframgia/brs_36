@@ -1,6 +1,7 @@
 @extends('user.master')
 @section('content')
 <div class="freework">
+    <div class="hide" data-route="{!! url('/home') !!}"></div>
     <article class="col-lg-3 col-md-3 col-sm-3 sm3">
         {{ Html::image('user/img/'.$user->image, 'a picture', ['class' => 'home_img', 'id' => 'avatar']) }}
             @if ($user->id == Auth::user()->id)
@@ -58,7 +59,7 @@
                     <tr>
                         <td>{{ Html::image('user/img/'.$follow['image'],'a picture', ['class' => 'imgfollow']) }}</td>
                         <td>
-                            <a href="/home/user/{{ $follow['id'] }}">{{ $follow['name'] }}</a>
+                            <a href="{{ URL::action('User\TimelineController@getTimelineUser', $follow['id']) }}">{{ $follow['name'] }}</a>
                             <p> {{ $follow['countFollowed']}}
                                 {{ trans('master.follower') }}
                             </p>

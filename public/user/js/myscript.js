@@ -13,7 +13,7 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: "POST",
-            data: {"type":'favorites', "idBook":idBook, "_token":_token, "temp" : temp},
+            data: {"type": 'favorites', "idBook": idBook, "_token": _token, "temp" : temp},
             success: function(kq) {
 
                 if (kq == 1) {
@@ -35,7 +35,7 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: "POST",
-            data: {"type": 'marks', "idbook": idbook,"_token": _token, "value" : value},
+            data: {"type": 'marks', "idbook": idbook,"_token": _token, "value": value},
             success: function(kq) {
                
             }
@@ -55,7 +55,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: {"idbook":idbook, "_token":_token, "data" : data},
+                    data: {"idbook":idbook, "_token": _token, "data" : data},
                     success: function(response) {
 
                         if (response.success) {
@@ -85,6 +85,7 @@ $(document).ready(function() {
                     type: "POST",
                     data: {"idReview": id_review, "_token":_token, "data" : data},
                     success: function(response) {
+
                         if (response.success) {
                             $("#temp_comment"+id_review).before(response.data);
                             $('input:text[name=txtcomment]').val("");
@@ -95,6 +96,45 @@ $(document).ready(function() {
                 });
             } 
         }
+    });
+
+    $(".glyphicon.glyphicon-star").click(function() {
+
+        for (i = 1; i <= 5; i++) {
+            $("#star" + i).removeClass("green");
+        }
+
+        var value = $(this).attr("starNumber");
+        var _token = $(".gettoken").attr('idtoken');
+        var url = $('.hide').data('route') + '/rateBook';
+        var bookId = $(this).attr('idbv');
+
+        for (i = 1; i <= value; i++) {
+            $("#star" + i).addClass("green");
+        }
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {"bookId": bookId, "_token": _token, "value" : value},
+            success: function(response) {
+
+            }
+        });
+    });
+
+    $(".glyphicon.glyphicon-remove").click(function() {
+        var _token = $(".gettoken").attr('idtoken');
+        var url = $('.hide').data('route') + '/delComment';
+        var idComment = $(this).attr('idComment');
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {"idComment": idComment, "_token": _token},
+            success: function(response) {
+
+            }
+        });
     });
 
 });

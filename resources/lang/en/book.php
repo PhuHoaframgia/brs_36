@@ -19,6 +19,7 @@ return [
     'category' => 'Category',
     'write_request_here' => 'Write request here',
     'write_comment_here' => 'Write comment here',
+    'write_review_here' => 'Write review here',
     'first' => 'First',
     'last' => 'Last',
     'unlike' => 'Unlike',

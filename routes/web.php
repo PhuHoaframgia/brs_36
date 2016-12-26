@@ -38,6 +38,7 @@ Route::group(['prefix' => '/home', 'middleware:user'], function () {
     ]);
     Route::post('markLike', ['as' => 'markLike', 'uses'=> 'User\LikeController@markLike']);
     Route::post('markbook', ['as' => 'markBook', 'uses'=> 'User\MarkController@markBook']);
+    Route::post('rateBook', ['as' => 'rateBook', 'uses'=> 'User\RateController@rateBook']);
     Route::resource('review', 'User\ReviewController', [
         'only' => ['store']
     ]);
