@@ -64,4 +64,15 @@ class CommentRepository extends BaseRepository implements CommentInterface
     {
         return $this->find($id)->review;
     }
+
+    public function selectCondition($reviewtId, $userId)
+    {
+        $comment = $this->model->where('user_id', $userId)->where('review_id', $reviewtId)->get();
+
+        if ($comment) {
+            return $comment;
+        }
+
+        return false;
+    }
 }

@@ -1,11 +1,10 @@
 $(document).ready(function() {
-
-    $(".b.like_a_cm").click(function() {
+    $(document).on('click', ".b.like_a_cm", function() {
         var id = $(this).attr('book-a');
         $(".show" + id + ".show_cmt").slideToggle();
     });
 
-    $("#bt").click(function() {
+    $(document).on('click', "#bt", function(){
         var temp = $(this).val();
         var _token = $(".gettoken").attr('idtoken');
         var url = $('.hide').data('route') + '/markLike';
@@ -27,7 +26,7 @@ $(document).ready(function() {
         });
     });
 
-    $("input:radio[name=mask]").click(function() {
+    $(document).on('click', "input:radio[name=mask]", function(){
         var value = $(this).val();
         var _token = $(".gettoken").attr('idtoken');
         var url = $('.hide').data('route') + '/markbook';
@@ -35,14 +34,14 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: "POST",
-            data: {"type": 'marks', "idbook": idbook,"_token": _token, "value": value},
+            data: {"type": 'marks', "idbook": idbook, "_token": _token, "value": value},
             success: function(kq) {
                
             }
         });
     });
 
-    $('input:text[name=txtreview]').keypress(function(event) {
+    $(document).on('keypress', 'input:text[name=txtreview]', function(event) {
         var data = $.trim($(this).val());
         var _token = $(".gettoken").attr('idtoken');
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -55,7 +54,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: {"idbook":idbook, "_token": _token, "data" : data},
+                    data: {"idbook": idbook, "_token": _token, "data": data},
                     success: function(response) {
 
                         if (response.success) {
@@ -70,7 +69,7 @@ $(document).ready(function() {
         }
     });
 
-    $('input:text[name=txtcomment]').keypress(function(event) {
+    $(document).on('keypress', 'input:text[name=txtcomment]', function(event) {
         var data = $.trim($(this).val());
         var _token = $(".gettoken").attr('idtoken');
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -83,7 +82,7 @@ $(document).ready(function() {
                $.ajax({
                     url: url,
                     type: "POST",
-                    data: {"idReview": id_review, "_token":_token, "data" : data},
+                    data: {"idReview": id_review, "_token":_token, "data": data},
                     success: function(response) {
 
                         if (response.success) {
@@ -98,7 +97,7 @@ $(document).ready(function() {
         }
     });
 
-    $(".glyphicon.glyphicon-star").click(function() {
+    $(document).on('click', ".glyphicon.glyphicon-star", function() {
 
         for (i = 1; i <= 5; i++) {
             $("#star" + i).removeClass("green");
@@ -116,25 +115,134 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: "POST",
-            data: {"bookId": bookId, "_token": _token, "value" : value},
+            data: {"bookId": bookId, "_token": _token, "value": value},
             success: function(response) {
 
             }
         });
     });
 
-    $(".glyphicon.glyphicon-remove").click(function() {
+    $(document).on('click', ".comment.glyphicon.glyphicon-remove", function() {
         var _token = $(".gettoken").attr('idtoken');
-        var url = $('.hide').data('route') + '/delComment';
         var idComment = $(this).attr('idComment');
+        var url = $('.hide').data('route') + '/delComment/' + idComment;
         $.ajax({
             url: url,
             type: "POST",
-            data: {"idComment": idComment, "_token": _token},
+            data: {"_token": _token},
             success: function(response) {
 
+                if (response.success) {
+                    $("#cont_cm" + idComment).hide();
+                } else {
+                    alert("error");
+                }    
             }
         });
     });
 
+    $(document).on('click', ".review.glyphicon.glyphicon-remove", function() {
+        var _token = $(".gettoken").attr('idtoken');
+        var idReview = $(this).attr('idReview');
+        var url = $('.hide').data('route') + '/delReview/'+idReview;
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {"_token": _token},
+            success: function(response) {
+
+                if (response.success) {
+                    $("#cont_review" + idReview).hide();
+                } else {
+                    alert('error');
+                }    
+            }
+        });
+    });
+
+    $(document).on('click', ".comment.glyphicon.glyphicon-pencil", function() {
+        var idComment = $(this).parent().find(".comment.glyphicon.glyphicon-remove").attr("idComment");
+        $(".contain_cm" + idComment).hide();
+        $(".edit_cm" + idComment).show();
+        $("#comment" + idComment).hide();
+    });
+
+    $(document).on('click', ".Cancle", function() {
+        var idComment = $(this).attr('idComment');
+        $(".contain_cm" + idComment).show();
+        $(".edit_cm" + idComment).hide();
+        $("#comment" + idComment).show();
+    });
+
+    $(document).on('keypress', 'input:text[name=txtedit]', function(event) {
+        var data = $.trim($(this).val());
+        var _token = $(".gettoken").attr('idtoken');
+        var idComment = $(this).parent().find("a").attr("idComment");
+        var url = $('.hide').data('route') + '/editComment/' + idComment;
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+
+        if (keycode == '13') {
+
+            if (data != "") {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {"_token":_token, "data": data},
+                    success: function(response) {
+
+                        if (response.success) {
+                            $(".contain_cm" + idComment).show();
+                            $(".edit_cm" + idComment).hide();
+                            $("#comment" + idComment).show(); 
+                            $('.content' + idComment).html(data);
+                        } else {
+                            alert("error");
+                        }                 
+                    }
+                });
+            } 
+        }
+    });
+
+    $(document).on('click', ".review.glyphicon.glyphicon-pencil", function() {
+        var idReview = $(this).parent().find(".b.like_a_cm").attr("book-a");
+        $("#review" + idReview).hide();
+        $(".edit_rv" + idReview).show();
+    });
+
+    $(document).on('click', ".esc", function() {
+        var idReview = $(this).attr("idReview");
+        $("#review" + idReview).show();
+        $(".edit_rv" + idReview).hide();
+    });
+
+    $(document).on('keypress', 'input:text[name=editReview]', function(event) {
+        var data = $.trim($(this).val());
+        var _token = $(".gettoken").attr('idtoken');
+        var idReview = $(this).parent().find("a").attr("idReview");
+        var url = $('.hide').data('route') + '/editReview/' + idReview;
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+
+        if (keycode == '13') {
+
+            if (data != "") {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {"_token":_token, "data": data},
+                    success: function(response) {
+
+                        if (response.success) {
+                            $("#review" + idReview).show();
+                            $(".edit_rv" + idReview).hide(); 
+                            $('.ctReview' + idReview).html(data);
+                        } else {
+                            alert("error");
+                        }                 
+                    }
+                });
+                // alert(data);
+            } 
+        }
+    });
 });

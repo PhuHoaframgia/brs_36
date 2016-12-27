@@ -39,6 +39,10 @@ Route::group(['prefix' => '/home', 'middleware:user'], function () {
     Route::post('markLike', ['as' => 'markLike', 'uses'=> 'User\LikeController@markLike']);
     Route::post('markbook', ['as' => 'markBook', 'uses'=> 'User\MarkController@markBook']);
     Route::post('rateBook', ['as' => 'rateBook', 'uses'=> 'User\RateController@rateBook']);
+    Route::post('delComment/{id}', ['as' => 'delComment', 'uses'=> 'User\CommentController@delete']);
+    Route::post('editComment/{id}', ['as' => 'editComment', 'uses'=> 'User\CommentController@update']);
+    Route::post('delReview/{id}', ['as' => 'delReview', 'uses'=> 'User\ReviewController@delete']);
+    Route::post('editReview/{id}', ['as' => 'editReview', 'uses'=> 'User\CommentController@update']);
     Route::resource('review', 'User\ReviewController', [
         'only' => ['store']
     ]);

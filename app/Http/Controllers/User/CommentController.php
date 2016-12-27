@@ -51,4 +51,34 @@ class CommentController extends Controller
             }
         }
     }
+
+    public function delete($commentId)
+    {
+        if (Request::ajax()) {
+            if ($this->timelineInterface->deleteAction(Auth::user()->id, 'Comments', $commentId) && 
+                $this->commentInterface->deleteComment($commentId)) {
+
+                return [ 'success' => true ];
+            } else {
+
+                return [ 'success' => false ];
+            }
+        }
+    }
+
+    public function update($commentId) 
+    {
+        if (Request::ajax()) {
+            $content = Request::get('data');
+            $inputs = [ 'content' => $content ];
+
+            if ($this->commentInterface->update($inputs, $commentId)) {
+
+                return [ 'success' => true ];
+            } else {
+
+                return [ 'success' => false ];
+            }
+        }
+    } 
 }

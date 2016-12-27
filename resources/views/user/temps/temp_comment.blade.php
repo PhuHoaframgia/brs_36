@@ -4,10 +4,8 @@
 </div>
 <div class="ava_cmt1" id="comment{{ $comment->user->id }}">
     <a class="like_cmt">{{ trans('book.like') }}</a>
-    @if ( Auth::user()->id == $review->user->id )
-        <a class="glyphicon glyphicon-remove" idComment="{{ $comment->id }}" ></a>
-        <a class="glyphicon glyphicon-pencil"></a>
-    @endif
+    <a class="glyphicon glyphicon-remove" idComment="{{ $comment->id }}" ></a>
+    <a class="glyphicon glyphicon-pencil"></a>
     <p class="p_date_cmt">{{ $comment->created_at }} </p>
 </div>
 <div class="cclear"></div>

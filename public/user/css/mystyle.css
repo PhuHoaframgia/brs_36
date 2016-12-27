@@ -685,3 +685,18 @@
 .glyphicon.glyphicon-remove:hover {
     color: #f43b60;
 }
+
+.input_edit { border:0px; margin-left: 5px;background: #edecec;padding: 3px 10px; }
+
+.edit { display: none; }
+
+.editrv { 
+    padding: 7px 15px;
+    border: 0px;
+    width: 600px;
+    background:#edecec;
+    margin-left: 5px;
+    margin-top: 5px; 
+}
+
+.edit_rv{ display: none; }
