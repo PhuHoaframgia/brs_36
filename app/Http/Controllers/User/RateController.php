@@ -50,7 +50,7 @@ class RateController extends Controller
                 'point' => $value,
             ];
             $this->rateInterface->update($updateRate, $rate->id);
-         	$this->rateInterface->rateAvg($bookId);
+            $this->rateInterface->rateAvg($bookId);
 
             return 2;
         }

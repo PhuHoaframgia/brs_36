@@ -37,6 +37,13 @@
 </div>
 
 <div class="form-group">
+    {{ Form::label('password-confirm', trans('auth.confirm_password'), ['class' => 'col-md-4 control-label']) }}
+    <div class="col-md-6">
+        {{ Form::password('password', ['class' => 'form-control', 'name' => 'password_confirmation']) }}
+    </div>
+</div>
+
+<div class="form-group">
     {!! Form::label('address', trans('user.address'), ['class' => 'col-lg-3 control-label']) !!}
     <div class="col-lg-7">
         {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => trans('user.address') ,'rows' => 3]) !!}

@@ -19,8 +19,8 @@ class TimelineController extends BaseController
 
     public function __construct(TimelineInterface $timeline, FollowInterface $follow, UserInterface $user)
     {
-        $this->middleware('user');
         parent::__construct();
+        $this->middleware('user');
         $this->timeline = $timeline;
         $this->follow = $follow;
         $this->user = $user;
@@ -31,8 +31,9 @@ class TimelineController extends BaseController
         $user = $this->user->getProfile(Auth::user()->id);
         $data = $this->timeline->getTimeline(Auth::user()->id, Auth::user()->id);
         $activities = $this->timeline->getActivity(Auth::user()->id);
+        $followActivities = $this->timeline->getActivityFollow(Auth::user()->id, Auth::user()->id);
 
-        return view('user.pages.home', compact('data', 'user', 'activities'));
+        return view('user.pages.home', compact('data', 'user', 'activities', 'followActivities'));
     }
 
     public function postUnFollow($id)
@@ -57,7 +58,8 @@ class TimelineController extends BaseController
         $user = $this->user->getProfile($id);
         $data = $this->timeline->getTimeline($id, Auth::user()->id);
         $activities = $this->timeline->getActivity($id);
+        $followActivities = $this->timeline->getActivityFollow(Auth::user()->id, Auth::user()->id);
 
-        return view('user.pages.home',compact('data', 'user', 'activities'));
+        return view('user.pages.home',compact('data', 'user', 'activities', 'followActivities'));
     }
 }

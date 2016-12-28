@@ -78,6 +78,6 @@
 @endsection
 @section('content1')
 <div class="pgrequest timeacti">
-    @include('user.blocks.time_follow')
+    @include('user.blocks.time_follow', ['activities' => $followActivities])
 </div>
 @endsection

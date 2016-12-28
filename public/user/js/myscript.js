@@ -12,7 +12,7 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: "POST",
-            data: {"type": 'favorites', "idBook": idBook, "_token": _token, "temp" : temp},
+            data: {"type": 'favorites', "idBook": idBook, "_token": _token, "temp": temp},
             success: function(kq) {
 
                 if (kq == 1) {
@@ -82,11 +82,11 @@ $(document).ready(function() {
                $.ajax({
                     url: url,
                     type: "POST",
-                    data: {"idReview": id_review, "_token":_token, "data": data},
+                    data: {"idReview": id_review, "_token": _token, "data": data},
                     success: function(response) {
 
                         if (response.success) {
-                            $("#temp_comment"+id_review).before(response.data);
+                            $("#temp_comment" + id_review).before(response.data);
                             $('input:text[name=txtcomment]').val("");
                         } else {
                             alert("error");
@@ -96,6 +96,7 @@ $(document).ready(function() {
             } 
         }
     });
+
 
     $(document).on('click', ".glyphicon.glyphicon-star", function() {
 
@@ -112,14 +113,14 @@ $(document).ready(function() {
             $("#star" + i).addClass("green");
         }
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {"bookId": bookId, "_token": _token, "value": value},
-            success: function(response) {
+        // $.ajax({
+        //     url: url,
+        //     type: "POST",
+        //     data: {"bookId": bookId, "_token": _token, "value": value},
+        //     success: function(response) {
 
-            }
-        });
+        //     }
+        // });
     });
 
     $(document).on('click', ".comment.glyphicon.glyphicon-remove", function() {
@@ -245,4 +246,5 @@ $(document).ready(function() {
             } 
         }
     });
+
 });

@@ -7,22 +7,27 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Interfaces\RequestInterface;
 use App\Http\Requests\RequestRequest;
+use App\Repositories\Interfaces\TimelineInterface;
 
 class RequestController extends BaseController
 {
-    protected $requestInterface;
 
-    public function __construct(RequestInterface $requestInterface)
+    protected $requestInterface;
+    protected $timeline;
+
+    public function __construct(RequestInterface $requestInterface, TimelineInterface $timeline)
     {
-        $this->requestInterface = $requestInterface;
         parent::__construct();
+        $this->requestInterface = $requestInterface;
+        $this->timeline = $timeline;
     }
 
     public function index()
     {
         $requests = $this->requestInterface->getAllOfRequest(Auth::user()->id);
+        $followActivities = $this->timeline->getActivityFollow(Auth::user()->id, Auth::user()->id);
 
-        return view('user.pages.request', compact('requests'));
+        return view('user.pages.request', compact('requests', 'followActivities'));
     }
 
     public function destroy($requestId)

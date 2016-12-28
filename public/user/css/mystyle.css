@@ -221,9 +221,9 @@
 
 .tbfollow tr:last-child{ border-bottom: none; }
 
-.tbfollow td{	padding-left: 2px;padding-right: 2px; }
+.tbfollow td{   padding-left: 2px;padding-right: 2px; }
 
-.tbfollow p { 	font-size: 12px;margin: -5px 0px 0px 3px; }
+.tbfollow p {   font-size: 12px;margin: -5px 0px 0px 3px; }
 
 /*----------Khung sach----------*/
 .sumlistbook{
@@ -700,3 +700,9 @@
 }
 
 .edit_rv{ display: none; }
+
+.glyphicon{ color:  #12b980; }
+
+.sm3>img{ width:100%; height:100%; }
+
+.green{ color: green; }

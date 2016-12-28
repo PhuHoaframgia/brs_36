@@ -38,4 +38,14 @@ class FavoriteRepository extends BaseRepository implements FavoriteInterface
     {
         return $this->find($id)->book;
     }
+
+    public function getBy($userId, $bookId)
+    {
+        return $this->model->where('user_id', $userId)->where('book_id', $bookId)->first();
+    }
+
+    public function removeFavorite($userId, $bookId)
+    {
+        return $this->model->where('user_id', $userId)->where('book_id', $bookId)->delete();
+    }
 }

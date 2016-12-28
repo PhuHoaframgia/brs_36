@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'required|max:255|email|unique:users,email,' . $this->user,
-            'password' => 'required|min:6',
+            'password' => 'required|confirmed|min:6',
             'birthday' => 'required',
             'avatar' => "mimes:jpg,jpeg,png,gif,svg",
         ];

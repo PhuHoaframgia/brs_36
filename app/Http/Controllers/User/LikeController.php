@@ -7,16 +7,22 @@ use App\Repositories\Interfaces\TimelineInterface;
 use App\Repositories\Interfaces\LikeInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Repositories\Interfaces\FavoriteInterface;
 
 class LikeController extends Controller
 {
     protected $likeInterface;
     protected $timelineInterface;
+    protected $favoriteInterface;
 
-    public function __construct(LikeInterface $likeInterface, TimelineInterface $timelineInterface) 
-    {
+    public function __construct(
+        LikeInterface $likeInterface,
+        TimelineInterface $timelineInterface,
+        FavoriteInterface $favoriteInterface
+    ) {
         $this->likeInterface = $likeInterface;
         $this->timelineInterface = $timelineInterface;
+        $this->favoriteInterface = $favoriteInterface;
     }
 
     public function markLike()
@@ -27,18 +33,28 @@ class LikeController extends Controller
             $temp = Request::get('temp');
 
             if ($temp == 'Mark favorite') {
-                $inputs = [
-                    'target_type' => $type,
-                    'target_id' => $idBook,
+                $book = [
                     'user_id' => Auth::user()->id,
+                    'book_id' => $idBook,
                 ];
-                $this->timelineInterface->insertAction($inputs);   
-                $this->likeInterface->create($inputs);
 
-                return 1;
+                if ($bookFavorite = $this->favoriteInterface->create($book)) {
+                    $inputs = [
+                        'target_type' => $type,
+                        'target_id' => $bookFavorite->id,
+                        'user_id' => Auth::user()->id,
+                    ];
+                    $this->timelineInterface->insertAction($inputs);
+
+                    return 1;
+                } else {
+
+                    return 2;
+                }
             } else {
-                $this->likeInterface->delLike($type, $idBook, Auth::user()->id);
-                $this->timelineInterface->deleteAction(Auth::user()->id, $type, $idBook);
+                $targetId = $this->favoriteInterface->getBy(Auth::user()->id, $idBook);
+                $this->timelineInterface->deleteAction(Auth::user()->id, $type, $targetId->id);
+                $this->favoriteInterface->removeFavorite(Auth::user()->id, $idBook);
 
                 return 2;
             }

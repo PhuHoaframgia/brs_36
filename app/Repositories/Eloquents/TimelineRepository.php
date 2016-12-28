@@ -21,7 +21,6 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
     protected $users;
     protected $favorites;
     protected $relationships;
-    protected $activities;
     protected $reviews;
     protected $comments;
     protected $rates;
@@ -30,23 +29,22 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
     protected $marks;
 
     public function __construct(
-        UserInterface $user,
-        FavoriteInterface $favorite,
-        FollowInterface $relationship,
-        CommentInterface $comment,
-        ReviewInterface $review,
-        RateInterface $rate,
+        UserInterface $userInterface,
+        FavoriteInterface $favoriteInterface,
+        FollowInterface $relationshipInterface,
+        CommentInterface $commentInterface,
+        ReviewInterface $reviewInterface,
+        RateInterface $rateInterface,
         Activity $activity,
         LikeInterface $likeInterface,
         MarkInterface $markInterface
         ) {
-        $this->users = $user;
-        $this->favorites = $favorite;
-        $this->relationships = $relationship;
-        $this->activities = $activity;
-        $this->reviews = $review;
-        $this->comments = $comment;
-        $this->rates = $rate;
+        $this->users = $userInterface;
+        $this->favorites = $favoriteInterface;
+        $this->relationships = $relationshipInterface;
+        $this->reviews = $reviewInterface;
+        $this->comments = $commentInterface;
+        $this->rates = $rateInterface;
         $this->model = $activity;
         $this->likes = $likeInterface;
         $this->marks = $markInterface;
@@ -64,7 +62,7 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
 
     public function getActivity($id)
     {
-        $actions = $this->activities->where('user_id', $id)->orderBy('id', 'desc')->get();
+        $actions = $this->model->where('user_id', $id)->orderBy('id', 'desc')->get();
         $activities = [];
         $data = [];
         foreach ($actions as $action) {
@@ -98,5 +96,30 @@ class TimelineRepository extends  BaseRepository implements TimelineInterface
         }
 
         return false;
+    }
+
+    public function getActivityFollow($id, $currentUser)
+    {
+        $inputs = $this->relationships->getFollow($id, $currentUser);
+        $ids = [];
+        foreach ($inputs as $userId) {
+            $ids[] = $userId['id'];
+        }
+        $actions = $this->model->whereIn('user_id', $ids)->orderBy('id', 'desc')->get();
+        $activities = [];
+        $data = [];
+        foreach ($actions as $action) {
+            $type = $action->target_type;
+            $data['content'] = $this->$type->getContent($action->target_id);
+            $data['title'] = $action->title .
+                (($data['content']->name) ? ('user '.$data['content']->name):('book '. $data['content']->tittle)).
+                ' at '. $data['content']->created_at;
+            $data['user'] = $action->user;
+            $data['type'] = $action->target_type;
+            $data['actionId'] = $action->id;
+            $activities[] = $data;
+        }
+
+        return $activities;
     }
 }

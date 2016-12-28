@@ -1,6 +1,9 @@
-{{ Html::image('user/img/'.$comment->user->image, 'a picture', ['class' => 'img_cmt']) }}
+{{ Html::image($comment->user->getAvatarPath(), 'a picture', ['class' => 'img_cmt']) }}
 <div>
-    <a href="{{ action('User\TimelineController@getTimelineUser', $comment->user->id) }}" class="show_name">{{ $comment->user->name }} </a> {{ $comment->content }}
+    <a href="{{ action('User\TimelineController@getTimelineUser', $comment->user->id) }}" class="show_name">
+    	{{ $comment->user->name }} 
+    </a> 
+    {{ $comment->content }}
 </div>
 <div class="ava_cmt1" id="comment{{ $comment->user->id }}">
     <a class="like_cmt">{{ trans('book.like') }}</a>

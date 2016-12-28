@@ -3,14 +3,14 @@
 <div class="detail freework" >
     <div class="detailbook">
         <div class="khung1" >
-            {{ Html::image("user/img/".$data['book']->image) }}
+            {{ Html::image($data['book']->getImagePath()) }}
             <div class="inforbook" >
                 <h2>{{ $data['book']->tittle }}</h2>
                 <input type="hidden" idtoken="{{ csrf_token() }}" class="gettoken" />
                 <div class="hide" data-route="{!! url('/home') !!}" data-user-id="{{ Auth::user()->id }}"></div>
                 @if ($data['haveLike'] == false)
                     <input type="button" id ="bt" idbv="{{ $data['book']->id }}" value="Mark favorite"  >
-                @else 
+                @else
                     <input type="button" id ="bt" idbv="{{ $data['book']->id }}" value="Remove favorite mark"  >
                 @endif
                 <table>
@@ -89,7 +89,7 @@
         <fieldset class="fs_review">
             @foreach ($data['book']->reviews as $review)
                 <div id="cont_review{{ $review->id }}">
-                    {{ Html::image('user/img/'.$review->user->image, 'a picture', ['class' => 'imgreview']) }}
+                    {{ Html::image($review->user->getAvatarPath(), 'a picture', ['class' => 'imgreview']) }}
 
                     <div class="edit_rv{{ $review->id }} edit_rv">
                         <input type="text" name="editReview" value="{{ $review->content }}" class="editrv">
@@ -118,7 +118,7 @@
                         <div class="show{{ $review->id }} show_cmt">
                             @foreach ($review->comments as $comment)
                                 <div id="cont_cm{{ $comment->id }}">
-                                    {{ Html::image('user/img/'.$comment->user->image, 'a picture', ['class' => 'img_cmt']) }}
+                                    {{ Html::image($comment->user->getAvatarPath(), 'a picture', ['class' => 'img_cmt']) }}
                                     <div class="contain_cm{{ $comment->id }}" >
                                         <a href="{{ action('User\TimelineController@getTimelineUser', $comment->user->id) }}" class="show_name" >
                                             {{ $comment->user->name }}
@@ -143,7 +143,7 @@
                                 </div>
                             @endforeach
                             <div id="temp_comment{{ $review->id }}">
-                                {{ Html::image('user/img/'.Auth::user()->image, 'a picture', ['class' => 'img_cmt']) }}
+                                {{ Html::image(Auth::user()->getAvatarPath(), 'a picture', ['class' => 'img_cmt']) }}
                                 <input 
                                     type="text" 
                                     name="txtcomment" 
@@ -159,7 +159,7 @@
                 <div class="clear_mer" id="cont_review review{{ $review->id }}"></div>
             @endforeach
             <div id="reviewhere">
-                {{ Html::image('user/img/'.Auth::user()->image, 'a picture', ['class' => 'imgreview']) }}
+                {{ Html::image(Auth::user()->getAvatarPath(), 'a picture', ['class' => 'imgreview']) }}
                 <input 
                     type="text" 
                     name="txtreview" 
@@ -174,6 +174,6 @@
 @endsection
 @section('content1')
 <div class="detail timeacti">
-    @include('user.blocks.time_follow')
+    @include('user.blocks.time_follow', ['activities' => $followActivities])
 </div>
 @endsection
