@@ -7,18 +7,20 @@
                 <div class="panel-heading">{{ trans('user.profile') }}</div>
                 <div class="panel-body">
                     {!! Form::model(
-                        $user, 
+                        $user,
                         [
-                            'action' => ['User\UsersController@update', $user->id], 
-                            'class' => 'form-horizontal', 
-                            'method' => 'PUT', 
+                            'action' => ['User\UsersController@update', $user->id],
+                            'class' => 'form-horizontal',
+                            'method' => 'PUT',
                             'enctype' => 'multipart/form-data',
                         ]
                     ) !!}
 
                         <div class="form-group">
-                            {!! Form::label('image', trans('user.curent_avatar'), ['class' => 'col-md-6 control-label']) !!}
-                            <img src="{{ $user->getAvatarPath() }}"  alt="User Avatar">
+                            {!! Form::label('image', trans('user.curent_avatar'), ['class' => 'col-md-4 control-label']) !!}
+                            <div class="profile_img" id="avatar">
+                                <img src="{{ $user->getAvatarPath() }}" alt="User Avatar">
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -119,7 +121,7 @@
                         <div class="form-group">
                             {!! Form::label('address', trans('user.address'), ['class' => 'col-md-4 control-label']) !!}
                             <div class="col-md-6">
-                                {!! Form::text('address', null, 
+                                {!! Form::text('address', null,
                                     ['class' => 'form-control', 'placeholder' => trans('user.address') ,'rows' => 3]
                                 ) !!}
 
@@ -144,8 +146,4 @@
     </div>
 </div>
 @endsection
-@section('content1')
-    <div class="timeacti">
-        @include('user.blocks.time_follow')
-    </div>
-@endsection
+

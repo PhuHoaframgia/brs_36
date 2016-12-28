@@ -15,13 +15,12 @@
                                 @endforelse
                             </ul>
                         </li>
-                        <li><a href="#">{{ trans('master.history') }}</a></li>
                         <li><a href="{!! URL::action('User\RequestController@index') !!}">{{ trans('master.request') }}</a></li>
                     </ul>
                 </nav>
             </div>
             <ul class="head_list">
-                <li><a href="#">{{ trans('master.logout') }} </a></li>
+                <li><a href="{!! URL::action('Auth\LoginController@logout') !!}">{{ trans('master.logout') }} </a></li>
             </ul>
         </header>
     </article>

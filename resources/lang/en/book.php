@@ -24,7 +24,7 @@ return [
     'last' => 'Last',
     'unlike' => 'Unlike',
     'book_category' => 'Category',
-    'tittle' => 'Tittle',
+    'title' => 'Title',
     'num_pages' => 'Num Pages',
     'image' => 'Image',
     'create_book_successfully' => 'Create Book Success!!',

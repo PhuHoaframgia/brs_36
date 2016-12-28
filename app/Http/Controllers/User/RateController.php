@@ -22,7 +22,7 @@ class RateController extends Controller
 
     public function rateBook()
     {
-        if (Request::ajax()) {
+        if(Request::ajax()) {
             $bookId = (int) Request::get('bookId');
             $value = Request::get('value');
             $rate = $this->rateInterface->findRate($bookId, Auth::user()->id);
@@ -46,7 +46,6 @@ class RateController extends Controller
                     }
                 }
             }
-
             $updateRate = [
                 'point' => $value,
             ];

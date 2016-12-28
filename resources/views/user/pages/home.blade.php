@@ -3,8 +3,21 @@
 <div class="freework">
     <div class="hide" data-route="{!! url('/home') !!}"></div>
     <article class="col-lg-3 col-md-3 col-sm-3 sm3">
-        <img src="{{ $user->getAvatarPath() }}">
+        <div class="col-lg-12" id="alert">
+            @include('admin.block.fails')
+            @include('admin.block.success')
+        </div>
+        <div class="home_img" id="avatar">
+            <img src="{{ $user->getAvatarPath() }}" alt="User Avatar">
+        </div>
         <h3 class="home_img_h3">{{ trans('master.profile') }}</h3>
+            @if (!$status)
+                {!! Form::open(['class' => 'form-horizontal', 'action' => ['User\TimelineController@postFollow', $user->id]]) !!}
+                    {!! Form::button(trans('master.follow'), ['class' => 'form-control', 'id' => $user->id]) !!}
+                {!! Form::close() !!}
+            @endif
+        <h3 class="home_img_h3">{{ Html::image('user/img/prof.png','a picture', array('class' => 'imgleft')) }}{{ trans('master.profile') }}</h3>
+        <div class="hide" data-route="{!! URL::action('User\TimelineController@getTimeline') !!}"></div>
         <div class="cclear"></div>
         <ul class="list2">
             <li><a >{{ trans('user.name') }}: {{ $user->name }}</a></li>
@@ -18,7 +31,7 @@
             <li><a >{{ trans('user.phone') }}: {{ $user->phone }}</a></li>
             <li><a >{{ trans('user.address') }}: {{ $user->address }}</a></li>
             @if ($user->id == Auth::user()->id)
-                <a href="{!! action('User\UsersController@edit', $user->id) !!}" 
+                <a href="{!! action('User\UsersController@edit', $user->id) !!}"
                     class="btn btn-default btn-xs">{{ trans('user.edit_profile') }}</a>
             @endif
         </ul>

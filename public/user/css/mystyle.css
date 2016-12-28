@@ -686,7 +686,23 @@
     color: #f43b60;
 }
 
-.glyphicon{ color:  #12b980; }
+.input_edit { border:0px; margin-left: 5px;background: #edecec;padding: 3px 10px; }
+
+.edit { display: none; }
+
+.editrv { 
+    padding: 7px 15px;
+    border: 0px;
+    width: 600px;
+    background:#edecec;
+    margin-left: 5px;
+    margin-top: 5px; 
+}
+
+.edit_rv{ display: none; }
 
 .sm3>img{ width:100%; height:100%; }
 
+.home_img>img{ width:100%; height:100%; }
+
+.profile_img>img{ width:100px; height:100px; }

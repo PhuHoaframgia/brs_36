@@ -38,10 +38,10 @@
                         <i class="fa fa-user fa-fw"></i>{{ Auth::user()->name }}<i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i>{{ trans('user.profile') }}</a>
+                        <li><a href="{!! action('Admin\UserController@edit', $user->id) !!}"><i class="fa fa-user fa-fw"></i>{{ trans('user.edit_profile') }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-fw"></i> {{ trans('user.logout') }}</a>
+                        <li><a href="{!! action('Auth\LoginController@logout') !!}"><i class="fa fa-sign-out fa-fw"></i> {{ trans('user.logout') }}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -53,17 +53,6 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="{{ trans('general.search') }}">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
                         <li>
                             <a href="#"><i class="fa fa-dashboard fa-fw"></i>{{ trans('general.dashboard') }}</a>
                         </li>

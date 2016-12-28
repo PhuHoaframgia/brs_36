@@ -38,11 +38,16 @@ class FollowRepository extends BaseRepository implements FollowInterface
         return $users;
     }
 
-    public function unFollow($currentUser ,$id)
+    public function follow($currentId, $id)
+    {
+        return $this->model->create(['follower_id' => $currentId, 'followed_id' => $id]);
+    }
+
+    public function unfollow($currentUser ,$id)
     {
         try {
-            $unFollowId = $this->model->where("follower_id", $currentUser)->where("followed_id", $id)->first();
-            $this->delete($unFollowId->id);
+            $unfollowId = $this->model->where("follower_id", $currentUser)->where("followed_id", $id)->first();
+            $this->delete($unfollowId->id);
 
             return true;
         } catch (Exception $ex) {

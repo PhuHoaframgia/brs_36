@@ -18,6 +18,7 @@
         {{ Html::script('/js/timelinescript.js') }}
         {{ Html::script('/js/jquery.json2html.js') }}
         {{ Html::script('/js/json2html.js') }}
+        {{ Html::script('/user/js/delay.js') }}
     </head>
 <!--header-->
 

@@ -33,4 +33,5 @@ return [
     'request_comfirm_delete' => 'Are you sure delete',
     'accept' => 'Accept',
     'accepted' => 'Accepted',
+    'dont_have' => 'Dont Have Book For This Category',
 ];

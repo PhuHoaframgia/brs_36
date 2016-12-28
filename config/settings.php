@@ -5,4 +5,8 @@ return [
     'avatar_default' => 'default.jpg',
     'image_url' => 'image/',
     'image_default' => 'default.jpg',
+    'result' => [
+        'success' => 'Success',
+        'fail' => 'Fail',
+    ],
 ];
