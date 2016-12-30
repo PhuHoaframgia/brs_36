@@ -20,7 +20,6 @@ class TimelineController extends BaseController
     public function __construct(TimelineInterface $timeline, FollowInterface $follow, UserInterface $user)
     {
         parent::__construct();
-        $this->middleware('user');
         $this->timeline = $timeline;
         $this->followUser = $follow;
         $this->user = $user;

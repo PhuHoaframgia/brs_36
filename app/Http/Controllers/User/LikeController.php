@@ -60,4 +60,32 @@ class LikeController extends Controller
             }
         }
     }
+
+    public function likeAction()
+    {
+        if (Request::ajax()) {
+            $actionName = Request::get('name');
+            $value = Request::get('value');
+            $actionId = Request::get('actionId');
+
+            if ($value == 1) {
+                $like = [
+                    'target_type' => config('settings.target_type.' . $actionName),
+                    'user_id' => Auth::user()->id,
+                    'target_id' => $actionId,
+                ];
+
+                if ($likeAction = $this->likeInterface->create($like)) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            } else {
+                $this->likeInterface->delLike(config('settings.target_type.' . $actionName), 
+                    $actionId, Auth::user()->id);
+
+                return 2;
+            }
+        }
+    }
 }

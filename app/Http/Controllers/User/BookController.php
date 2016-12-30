@@ -25,7 +25,7 @@ class BookController extends BaseController
         LikeInterface $likeInterface,
         MarkInterface $markInterface,
         RateInterface $rateInterface,
-        TimelineInterface $timelineInterface
+        TimelineInterface $timelineInterface,
     ) {
         parent::__construct();
         $this->bookInterface = $bookInterface;

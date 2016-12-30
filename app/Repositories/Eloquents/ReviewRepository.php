@@ -6,6 +6,8 @@ use App\Models\Review;
 use App\Repositories\Interfaces\ReviewInterface;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use DB;
+use Exception;
 
 class ReviewRepository extends BaseRepository implements ReviewInterface
 {
@@ -49,15 +51,25 @@ class ReviewRepository extends BaseRepository implements ReviewInterface
         return false;
     }
 
-    public function deleteReview($bookId)
+    public function deleteReview($reviewId)
     {
-        $review = $this->delete($bookId);
+        DB::beginTransaction();
+        try{
+            $this->find($reviewId)->likes()->detach();
+            $comments = $this->find($reviewId)->comments;
+            foreach ($comments as $comment) {
+                $comment->likes()->detach();
+            }
+            $this->find($reviewId)->comments()->delete();
+            $this->find($reviewId)->delete();
+            DB::commit();
 
-        if ($review) {
             return true;
-        }
+        } catch (Exception $e) {
+            DB::rollback();
 
-        return false;
+            return false;
+        }
     }
 
     public function getContent($id)

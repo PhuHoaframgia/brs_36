@@ -6,6 +6,8 @@ use App\Models\Comment;
 use App\Repositories\Interfaces\CommentInterface;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use DB;
+use Exception;
 
 class CommentRepository extends BaseRepository implements CommentInterface
 {
@@ -51,13 +53,19 @@ class CommentRepository extends BaseRepository implements CommentInterface
 
     public function deleteComment($commentId)
     {
-        $comment = $this->delete($commentId);
+        DB::beginTransaction();
+        try{
+            $comment = $this->find($commentId);
+            $comment->likes()->detach();
+            $this->delete($commentId);
+            DB::commit();
 
-        if ($comment) {
-            return true;
+          return true;
+        } catch (Exception $e) {
+            DB::rollback();
+
+            return false;
         }
-
-        return false;
     }
 
     public function getContent($id)

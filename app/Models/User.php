@@ -84,6 +84,7 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->hasMany(Like::class);
+       // return $this->morphedByMany(Comment::class, 'target');
     }
 
     public function reviews()

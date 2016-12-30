@@ -20,7 +20,7 @@ window.onload = (function () {
         });
     });
 
-    $(".form-control").click(function () {
+    $(".form-control-user").click(function () {
         var token  = $("input[name = '_token']").val();
         var followed_id = $(this).attr('id');
         var url = $('.hide').data('route') + '/follow/' + followed_id;
@@ -32,10 +32,10 @@ window.onload = (function () {
             success: function(data) {
 
                 if (data == 'Success') {
-                    $('.form-control').hide();
+                    $('.form-control-user').hide();
                 } else {
                     alert('Fail');
-                    $('.form-control.').val('Follow');
+                    $('.form-control-user').val('Follow');
                 }
             }
         });

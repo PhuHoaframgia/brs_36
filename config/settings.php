@@ -16,4 +16,12 @@ return [
     'likes' => 'likes',
     'follow' => 'relationships',
     'rates' => 'rates',
+    'target_type' => [
+        'comments' => 'App\Models\Comment',
+        'reviews' => 'App\Models\Review',
+        'favorites' => 'App\Models\Favorite',
+        'marks' => 'App\Models\Mark',
+        'follow' => 'App\Models\Relationship',
+        'rates' => 'App\Models\Rate', 
+    ],
 ];

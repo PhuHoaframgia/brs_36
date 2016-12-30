@@ -704,3 +704,19 @@
 .home_img>img{ width:100%; height:100%; }
 
 .profile_img>img{ width:100px; height:100px; }
+
+.form-control-user { 
+    padding: 5px 0px;
+    float: left;width: 269px;
+    margin-top: 7px;border: 0px;
+    background: #12b980;
+    color: white; 
+}
+
+.span-review {
+    float: left;margin-top: 3px; font-size: 12px;
+}
+
+.span-comment {
+    float: left;font-size: 10px;margin-right: 5px;margin-top: 3px;
+}

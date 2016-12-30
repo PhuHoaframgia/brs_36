@@ -163,9 +163,11 @@ $(document).ready(function() {
 
     $(document).on('click', ".comment.glyphicon.glyphicon-pencil", function() {
         var idComment = $(this).parent().find(".comment.glyphicon.glyphicon-remove").attr("idComment");
+        var value = $('.content' + idComment).text();
         $(".contain_cm" + idComment).hide();
         $(".edit_cm" + idComment).show();
         $("#comment" + idComment).hide();
+        $(".cont" + idComment).val($.trim(value));
     });
 
     $(document).on('click', ".Cancle", function() {
@@ -207,10 +209,10 @@ $(document).ready(function() {
 
     $(document).on('click', ".review.glyphicon.glyphicon-pencil", function() {
         var idReview = $(this).parent().find(".b.like_a_cm").attr("book-a");
+        var value = $('.ctReview' + idReview).text();
         $("#review" + idReview).hide();
         $(".edit_rv" + idReview).show();
-        var idReview = $(this).parent().find(".review").attr("idReview");
-        $('.ctReview' + idReview).attr('value', $('.content-review' + idReview).val());
+        $("#" + idReview).val($.trim(value));
     });
 
     $(document).on('click', ".esc", function() {
@@ -218,7 +220,6 @@ $(document).ready(function() {
         $("#review" + idReview).show();
         $(".edit_rv" + idReview).hide();
         var idReview = $(this).attr("idReview");
-        $('#' + idReview).val("");
     });
 
     $(document).on('keypress', 'input:text[name=editReview]', function(event) {
@@ -250,4 +251,73 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on('click','.like_cmt',function() {
+        var idComment = $(this).attr('idComment');
+        var name = $(this).attr('name');
+        var _token = $(".gettoken").attr('idtoken');
+        var url = $('.hide').data('route') + '/likeAction';
+        var count = parseInt($('.load-like-comment' + idComment).attr('value'));
+        var data = $.trim($('.like' + idComment).html());
+
+        if(data == 'Like') {
+            var value = 1;
+        } else {
+            var value = 2;
+        }
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {"_token": _token, "actionId": idComment, "value": value, "name": name},
+            success: function(kq) {
+
+                if (kq == 1) {
+                    $('.like' + idComment).html('Unlike');
+                    count++;
+                }
+
+                if (kq == 2) {
+                   $('.like' + idComment).html('Like');
+                   count--;
+                }
+                $('.load-like-comment' + idComment).html(count);
+                $('.load-like-comment' + idComment).attr("value", count);
+            }
+        });
+
+
+    });
+
+    $(document).on('click','.like-review',function() {
+        var idReview = $(this).attr('idReview');
+        var name = $(this).attr('name');
+        var _token = $(".gettoken").attr('idtoken');
+        var url = $('.hide').data('route') + '/likeAction';
+        var count = parseInt($('.load-like-review' + idReview).attr('value'));
+        var data = $.trim($('.review-id' + idReview).html());
+
+        if(data == 'Like') {
+            var value = 1;
+        } else {
+            var value = 2;
+        }
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {"_token": _token, "actionId": idReview, "value": value, "name": name},
+            success: function(kq) {
+
+                if (kq == 1) {
+                    $('.review-id' + idReview).html('Unlike');
+                    count++;
+                }
+
+                if (kq == 2) {
+                   $('.review-id' + idReview).html('Like');
+                   count--;
+                }
+                $('.load-like-review' + idReview).html(count);
+                $('.load-like-review' + idReview).attr("value", count);
+            }
+        });
+    });
 });

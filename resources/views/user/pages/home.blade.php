@@ -10,12 +10,13 @@
         <div class="home_img" id="avatar">
             <img src="{{ $user->getAvatarPath() }}" alt="User Avatar">
         </div>
+        @if (!$status)
+            {!! Form::open(['class' => 'form-horizontal', 'action' => ['User\TimelineController@postFollow', $user->id]]) !!}
+                {!! Form::button(trans('master.follow'), ['class' => 'form-control-user', 'id' => $user->id]) !!}
+            {!! Form::close() !!}
+        @endif
+        <div class="cclear"></div>
         <h3 class="home_img_h3">{{ trans('master.profile') }}</h3>
-            @if (!$status)
-                {!! Form::open(['class' => 'form-horizontal', 'action' => ['User\TimelineController@postFollow', $user->id]]) !!}
-                    {!! Form::button(trans('master.follow'), ['class' => 'form-control', 'id' => $user->id]) !!}
-                {!! Form::close() !!}
-            @endif
         <div class="hide" data-route="{!! URL::action('User\TimelineController@getTimeline') !!}"></div>
         <div class="cclear"></div>
         <ul class="list2">

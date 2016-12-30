@@ -6,23 +6,19 @@ use Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\ReviewInterface;
 use App\Repositories\Interfaces\TimelineInterface;
-use App\Repositories\Interfaces\CommentInterface;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
     protected $reviewInterface;
     protected $timelineInterface;
-    protected $commentInterface;
 
     public function __construct(
         ReviewInterface $reviewInterface,
-        TimelineInterface $timelineInterface, 
-        CommentInterface $commentInterface
+        TimelineInterface $timelineInterface
     ) {
         $this->reviewInterface = $reviewInterface;
         $this->timelineInterface = $timelineInterface;
-        $this->commentInterface = $commentInterface;
     }
 
     public function store()
@@ -61,17 +57,15 @@ class ReviewController extends Controller
     public function delete($reviewId)
     {
         if (Request::ajax()) {
-            
-            if ($this->reviewInterface->deleteReview($reviewId) && 
-                $this->timelineInterface->deleteAction(Auth::user()->id, 'reviews', $reviewId)) {
-                $comments = $this->commentInterface->selectCondition($reviewId, Auth::user()->id);
+            $review = $this->reviewInterface->find($reviewId);
+            $comments = $review->comments()->get(['id'])->pluck(['id']);
 
-                if ($comments) {
-                    foreach ($comments as $comment) {
-                        $this->timelineInterface->deleteAction(Auth::user()->id, 'comments', $comment->id);
-                        $this->commentInterface->deleteComment($comment->id);
-                    }
-                }
+            if ($this->reviewInterface->deleteReview($reviewId) && 
+                $this->timelineInterface->deleteAction(Auth::user()->id, config('settings.reviews'), $reviewId)) {
+                $this->timelineInterface->getModel()
+                    ->where('target_type', config('settings.comments'))
+                    ->whereIn('target_id', $comments)
+                    ->delete();
 
                 return ['success' => true];
             } else {

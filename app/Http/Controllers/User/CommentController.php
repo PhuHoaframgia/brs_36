@@ -53,8 +53,8 @@ class CommentController extends Controller
     public function delete($commentId)
     {
         if (Request::ajax()) {
-            if ($this->timelineInterface->deleteAction(Auth::user()->id, 'Comments', $commentId) && 
-                $this->commentInterface->deleteComment($commentId)) {
+            if ($this->timelineInterface->deleteAction(Auth::user()->id, 'comments', $commentId)
+                    && $this->commentInterface->deleteComment($commentId)) {
                 return ['success' => true ];
             } else {
                 return ['success' => false];

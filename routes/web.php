@@ -16,7 +16,7 @@ Route::group(['middleware' => 'login'], function () {
 });
 
 Auth::routes();
-Route::group(['prefix' => '/home', 'middleware:user'], function () {
+Route::group(['prefix' => '/home', 'middleware'=>'user'], function () {
     Route::get('/', [
         'as' => 'user',
         'uses' => 'User\TimelineController@getTimeline',
@@ -24,6 +24,10 @@ Route::group(['prefix' => '/home', 'middleware:user'], function () {
     Route::get('/user/{id}', [
         'as' => 'user-follow',
         'uses' => 'User\TimelineController@getTimelineUser',
+    ]);
+    Route::post('/follow/{id}', [
+        'as' => 'follow',
+        'uses' => 'User\TimelineController@postFollow',
     ]);
     Route::post('/unfollow/{id}', [
         'as' => 'unFollow',
@@ -43,6 +47,7 @@ Route::group(['prefix' => '/home', 'middleware:user'], function () {
     Route::post('editComment/{id}', ['as' => 'editComment', 'uses'=> 'User\CommentController@update']);
     Route::post('delReview/{id}', ['as' => 'delReview', 'uses'=> 'User\ReviewController@delete']);
     Route::post('editReview/{id}', ['as' => 'editReview', 'uses'=> 'User\ReviewController@update']);
+    Route::post('likeAction', ['as' => 'likeAction', 'uses'=> 'User\LikeController@likeAction']);
     Route::resource('review', 'User\ReviewController', [
         'only' => ['store']
     ]);

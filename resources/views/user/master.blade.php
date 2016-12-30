@@ -16,8 +16,6 @@
         {{ Html::script('http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js') }}
         {{ Html::script('/user/js/myscript.js') }}
         {{ Html::script('/js/timelinescript.js') }}
-        {{ Html::script('/js/jquery.json2html.js') }}
-        {{ Html::script('/js/json2html.js') }}
         {{ Html::script('/user/js/delay.js') }}
     </head>
 <!--header-->
@@ -40,7 +38,7 @@
                         'method' => 'GET',
                     ])
                     !!}
-                        {!! Form::text('search', '', ['class' => 'form-control', 'placeholder' => trans('master.search')]) !!}
+                        {!! Form::text('search', '', ['class' => 'form-control-search', 'placeholder' => trans('master.search')]) !!}
                     {!! Form::close() !!}
                 </div>
                 @yield('content1')
@@ -53,5 +51,5 @@
         @include('user.blocks.footer')
     </div>
 </body>
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+   
 </html>

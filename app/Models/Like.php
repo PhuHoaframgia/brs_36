@@ -14,4 +14,14 @@ class Like extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // public function target()
+    // {
+    //     return $this->morphTo();
+    // }
+
+    public function comments()
+    {
+        return $this->morphedByMany(Comment::class, 'target');
+    }
 }

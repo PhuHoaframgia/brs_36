@@ -32,10 +32,13 @@ class LikeRepository extends BaseRepository implements LikeInterface
         $this->model->where('user_id', $userId)->where('target_type', $type)->where('target_id', $tagert_id)->delete();
     }
 
-    public function check($userId, $bookId, $table)
+    public function check($userId, $id, $type)
     {
-        $type = $table;
-        $like = $this->$type->getBy($userId, $bookId);
+        $like = $this->model
+            ->where('user_id', $userId)
+            ->where('target_type', $type)
+            ->where('target_id', $id)
+            ->first();
 
         if ($like) {
             return true;

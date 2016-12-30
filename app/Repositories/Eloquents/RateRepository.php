@@ -38,8 +38,8 @@ class RateRepository extends BaseRepository implements RateInterface
     public function rateAvg($bookId)
     {
         $rate = $this->model->where('book_id', $bookId)->avg('point');
-        $point = $this->bookRepository->update(['rate_avg' => $rate], $bookId);
-
+        $point = $this->bookRepository->update(['rate_avg' => ((int)$rate)], $bookId);
+        dd((int)$rate);
         return $point;
     }
 

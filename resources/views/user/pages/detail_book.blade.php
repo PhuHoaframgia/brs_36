@@ -107,7 +107,26 @@
                             </span> 
                         </div>
                         <div >
-                            <a class="a like_a_cm">{{ trans('book.like') }}</a>
+                            @if (!$review->is_liked)
+                                <a class="a like_a_cm like-review review-id{{ $review->id }}" 
+                                    idReview="{{ $review->id }}" 
+                                    name="{{ config('settings.reviews') }}">
+                                    {{ trans('book.like') }}
+                                </a>
+                                <span class="span-review load-like-review{{ $review->id }}" value="{{ $review->likes->count('id') }}">
+                                    {{ $review->likes->count('id') }}
+                                </span>
+                            @else
+                                <a class="a like_a_cm like-review review-id{{ $review->id }}"
+                                    idReview="{{ $review->id }}" 
+                                    name="{{ config('settings.reviews') }}">
+                                    {{ trans('book.Unlike') }}
+                                </a>
+                                <span class="span-review load-like-review{{ $review->id }}" value="{{ $review->likes->count('id') }}">
+                                    {{ $review->likes->count('id') }}
+                                </span> 
+                            @endif
+                            
                             <a class="b like_a_cm" book-a="{{ $review->id }}" >{{ trans('book.comment') }}</a>
                             <p class="p_date">{{ $review->created_at }}</p>
                             @if ( Auth::user()->id == $review->user->id )
@@ -117,7 +136,7 @@
                         </div>
                         <div class="cclear"></div>
                         <div class="show{{ $review->id }} show_cmt">
-                            @foreach ($review->comments as $comment)
+                            @foreach ($review->comments as $key => $comment)
                                 <div id="cont_cm{{ $comment->id }}">
                                     {{ Html::image($comment->user->getAvatarPath(), 'a picture', ['class' => 'img_cmt']) }}
                                     <div class="contain_cm{{ $comment->id }}" >
@@ -129,13 +148,32 @@
                                         </span>
                                     </div>
                                     <div class="edit_cm{{ $comment->id }} edit">
-                                        <input type="text" name="txtedit" class="input_edit" value="{{ $comment->content }}"> 
+                                        <input type="text" name="txtedit" class="input_edit cont{{ $comment->id }}" value="{{ $comment->content }}"> 
                                         <a class="Cancle" idComment="{{ $comment->id }}">Cancle</a>
                                     </div>
-                                    <div class="ava_cmt1" id="comment{{ $comment->id }}">
-                                        <a class="like_cmt">{{ trans('book.like') }}</a>
+                                    <div class="ava_cmt1" id="comment{{ $comment->id }}">  
+                                        @if (!$comment->is_liked)
+                                            <a class="like_cmt like{{ $comment->id }}" 
+                                                idComment="{{ $comment->id }}" 
+                                                name="{{ config('settings.comments') }}">
+                                                {{ trans('book.like') }}
+                                            </a>
+                                            <span class="span-comment load-like-comment{{ $comment->id }}" value="{{ $comment->likes->count('id') }}">
+                                                {{ $comment->likes->count('id') }}
+                                            </span>
+                                        @else
+                                            <a class="like_cmt like{{ $comment->id }}" 
+                                                idComment="{{ $comment->id }}" 
+                                                name="{{ config('settings.comments') }}">
+                                                {{ trans('book.Unlike') }}
+                                            </a>
+                                            <span class="span-comment load-like-comment{{ $comment->id }}" value="{{ $comment->likes->count('id') }}">
+                                                {{ $comment->likes->count('id') }}
+                                            </span>
+                                        @endif
+                     
                                         <p class="p_date_cmt">{{ $comment->created_at }}</p>
-                                        @if ( Auth::user()->id == $review->user->id )
+                                        @if ( Auth::user()->id == $comment->user->id )
                                             <a class="comment glyphicon glyphicon-remove" idComment="{{ $comment->id }}"></a>
                                             <a class="comment glyphicon glyphicon-pencil"></a>
                                         @endif
